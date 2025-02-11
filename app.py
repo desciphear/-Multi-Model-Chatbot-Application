@@ -53,19 +53,7 @@ if prompt:
     st.session_state.messages.append({"role":"assistant", "content":response})
     
     
-def reset():
-    st.session_state.messages = []
-    print(st.session_state.messages)
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-   
 
-with st.sidebar:
-    
-    check = st.button('Reset Chat')
-    if check:
-        reset()
         
      
 
