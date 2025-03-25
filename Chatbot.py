@@ -1,17 +1,14 @@
 import streamlit as st
 import time
 from openai import OpenAI
-from dotenv import load_dotenv
-import os
-hide_main_content_style = """
-            <style>
-            .st-emotion-cache-1jicfl2{
-                 padding: 0rem 1rem 10rem;
-            }
-            </style>
-            """
-st.markdown(hide_main_content_style, unsafe_allow_html=True)
-load_dotenv()
+import base64
+import json
+import zipfile
+import io
+from PIL import Image
+import requests
+import PyPDF2
+
 # Model dictionary with display names as keys and model IDs as values (alphabetically ordered)
 MODEL_DICT = {
     "DeepHermes": "nousresearch/deephermes-3-llama-3-8b-preview:free",
@@ -434,6 +431,138 @@ MODEL_INFO = {
     }
 }
 
+# Function to encode files to base64
+def encode_file(uploaded_file):
+    if uploaded_file is not None:
+        file_extension = uploaded_file.name.split('.')[-1].lower()
+        base64_content = base64.b64encode(uploaded_file.getvalue()).decode()
+        
+        if file_extension in ['png', 'jpg', 'jpeg', 'gif']:
+            return {
+                "type": "image",
+                "content": base64_content,
+                "format": file_extension
+            }
+        elif file_extension == 'zip':
+            extracted_files = {}
+            with zipfile.ZipFile(io.BytesIO(uploaded_file.getvalue())) as z:
+                for filename in z.namelist():
+                    with z.open(filename) as f:
+                        content = base64.b64encode(f.read()).decode()
+                        extracted_files[filename] = content
+            return {
+                "type": "zip",
+                "content": extracted_files
+            }
+        else:
+            return {
+                "type": "file",
+                "content": base64_content,
+                "format": file_extension
+            }
+
+# Add these functions after the existing encode_file function
+def process_text_file(content):
+    """Process text file content."""
+    try:
+        return content.decode('utf-8')
+    except UnicodeDecodeError:
+        return None
+
+def process_image_file(content):
+    """Process image file and return description."""
+    try:
+        image = Image.open(io.BytesIO(content))
+        return f"Image dimensions: {image.size}, Mode: {image.mode}"
+    except:
+        return None
+
+def extract_file_content(file):
+    """Extract and process file content based on type."""
+    content = file.read()
+    file_extension = file.name.split('.')[-1].lower()
+    
+    if file_extension == 'pdf':
+        try:
+            pdf_reader = PyPDF2.PdfReader(io.BytesIO(content))
+            text_content = ""
+            for page in pdf_reader.pages:
+                text_content += page.extract_text() + "\n"
+            return text_content
+        except Exception as e:
+            return f"Error processing PDF: {str(e)}"
+    if file_extension in ['txt', 'py', 'json', 'md']:
+        return process_text_file(content)
+    elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
+        return process_image_file(content)
+    elif file_extension == 'pdf':
+        return f"PDF file detected: {file.name}"
+    elif file_extension == 'zip':
+        extracted = {}
+        with zipfile.ZipFile(io.BytesIO(content)) as z:
+            for filename in z.namelist():
+                with z.open(filename) as f:
+                    extracted[filename] = process_text_file(f.read())
+        return extracted
+    return None
+
+# Function to process and display images from model response
+def process_image_response(response_text):
+    # Check if response contains base64 image data
+    if "data:image" in response_text:
+        try:
+            # Extract base64 image data
+            img_data = response_text.split("data:image")[1].split(";base64,")[1].split("```")[0].strip()
+            image_bytes = base64.b64decode(img_data)
+            image = Image.open(io.BytesIO(image_bytes))
+            
+            # Display image
+            st.image(image, caption="Generated Image")
+            
+            # Add download button
+            buf = io.BytesIO()
+            image.save(buf, format="PNG")
+            st.download_button(
+                label="Download Image",
+                data=buf.getvalue(),
+                file_name="generated_image.png",
+                mime="image/png"
+            )
+            
+            # Return cleaned text without base64 data
+            return response_text.split("data:image")[0] + response_text.split("```")[1]
+        except:
+            return response_text
+    return response_text
+
+# Add this after the imports
+def process_file_uploads():
+    """Process and store uploaded files in session state."""
+    if "uploaded_file_contents" not in st.session_state:
+        st.session_state.uploaded_file_contents = {}
+    
+    if uploaded_files:
+        for file in uploaded_files:
+            if file.name not in st.session_state.uploaded_file_contents:
+                processed_content = extract_file_content(file)
+                if processed_content:
+                    st.session_state.uploaded_file_contents[file.name] = {
+                        "content": processed_content,
+                        "type": file.type
+                    }
+                file.seek(0)
+
+# Add this function to manage file removal
+def cleanup_removed_files():
+    """Remove file contents from session state when files are removed from uploader."""
+    if "uploaded_file_contents" in st.session_state:
+        current_files = set(f.name for f in uploaded_files) if uploaded_files else set()
+        stored_files = set(st.session_state.uploaded_file_contents.keys())
+        removed_files = stored_files - current_files
+        
+        for file in removed_files:
+            del st.session_state.uploaded_file_contents[file]
+
 # Add sidebar
 with st.sidebar:
     st.title("Chatbot Settings")
@@ -469,9 +598,22 @@ with st.sidebar:
         st.markdown(f"**Release Date:** {info['release_date']}")
     else:
         st.markdown("Detailed information not available for this model.")
-
     
-
+    # Add file upload section
+    st.divider()
+    st.markdown("### Upload Files")
+    uploaded_files = st.file_uploader(
+        "Upload documents, images, code, or zip files",
+        type=['txt', 'py', 'json', 'jpg', 'jpeg', 'png', 'gif', 'zip', 'pdf'],
+        accept_multiple_files=True
+    )
+    
+    if uploaded_files:
+        process_file_uploads()
+        cleanup_removed_files()  # Add this line to handle file removal
+        st.markdown("### Uploaded Files")
+        for filename in st.session_state.uploaded_file_contents.keys():
+            st.markdown(f"- {filename}")
 
 st.markdown(f"<h1 style='text-align: center; color: black;'>{selected_display_name}</h1>", unsafe_allow_html=True)
 
@@ -487,36 +629,70 @@ if "model_messages" not in st.session_state:
 # Display messages for the currently selected model
 for message in st.session_state.model_messages[selected_model]:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        if isinstance(message["content"], str):
+            st.markdown(message["content"])
+        elif isinstance(message["content"], dict) and "type" in message["content"]:
+            if message["content"]["type"] == "image":
+                image_bytes = base64.b64decode(message["content"]["content"])
+                st.image(image_bytes)
 
 prompt = st.chat_input("Ask Your Question")
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
+    api_key="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",
 )
 
-
+# Update the chat logic section
 if prompt:
+    # Prepare message content
+    message_content = prompt
+    message_for_model = prompt  # Default to just the prompt
+    
+    # Add file contents only if files are present and explicitly requested in the current prompt
+    if st.session_state.uploaded_file_contents and any(
+        keyword in prompt.lower() 
+        for keyword in ['analyze', 'read', 'show', 'content', 'what is in', 'what does', 'file', 'document']
+    ):
+        files_content = []
+        for filename, file_data in st.session_state.uploaded_file_contents.items():
+            files_content.append({
+                "filename": filename,
+                "content": file_data["content"]
+            })
+        message_for_model = f"{message_content}\n\nAvailable files:\n{json.dumps(files_content, indent=2)}"
+    
+    # Display visible message to user (without file contents)
     with st.chat_message("user"):
-        st.markdown(prompt)
-    # Append message to the currently selected model's history
-    st.session_state.model_messages[selected_model].append({"role": "user", "content": prompt})
+        st.markdown(message_content)
+    
+    # Store only the user's message without file contents for history
+    st.session_state.model_messages[selected_model].append({
+        "role": "user",
+        "content": message_content
+    })
     
     with st.spinner("Thinking..."):
         completion = client.chat.completions.create(
             model=selected_model,
             messages=[
-                {"role": "user", "content": m["content"]}
+                {"role": m["role"], "content": m["content"]} 
                 for m in st.session_state.model_messages[selected_model]
-            ],
+            ] + ([{"role": "user", "content": message_for_model}] if message_for_model != message_content else []),
             temperature=temperature
         )
         response = completion.choices[0].message.content
         
+        # Process response for images
+        response = process_image_response(response)
+        
     with st.chat_message("assistant"):
         st.write_stream(stream_data(response))
-    st.session_state.model_messages[selected_model].append({"role": "assistant", "content": response})
+    
+    st.session_state.model_messages[selected_model].append({
+        "role": "assistant",
+        "content": response
+    })
 
 
 
