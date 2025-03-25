@@ -25,5 +25,4 @@ Install them using pip:
 ```bash
 pip install streamlit openai
 
-## 🏷️ Tags
-`streamlit` `OpenAI` `chatbot` `AI models` `multi-model support` `natural language processing` `machine learning` `deep learning` `Q&A chatbot` `code generation` `creative writing` `data science`
+
