@@ -3,14 +3,14 @@ import time
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
-    hide_main_content_style = """
-                <style>
-                .st-emotion-cache-1jicfl2{
-                     padding: 0rem 1rem 10rem;
-                }
-                </style>
-                """
-    st.markdown(hide_main_content_style, unsafe_allow_html=True)
+hide_main_content_style = """
+            <style>
+            .st-emotion-cache-1jicfl2{
+                 padding: 0rem 1rem 10rem;
+            }
+            </style>
+            """
+st.markdown(hide_main_content_style, unsafe_allow_html=True)
 load_dotenv()
 # Model dictionary with display names as keys and model IDs as values (alphabetically ordered)
 MODEL_DICT = {
