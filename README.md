@@ -1,30 +1,24 @@
-# 🌟 Mistral-Powered Conversational Chatbot
+# 💬 AI Chatbot Powered by Mistral 🚀
 
-Engage in dynamic Q&A sessions with a powerful conversational chatbot built using the **Mistral** language model from Hugging Face! This Python program is designed for intuitive and seamless interactions, responding to your queries intelligently in real time.
+Welcome to the **AI Chatbot**, an interactive and responsive chatbot built with **Streamlit** and **Mistral**, offering real-time conversational AI responses. This project is designed to deliver seamless Q&A sessions with an engaging user interface.
 
 ---
 
-## 🚀 Features
+## 🌟 Features
 
-- **Interactive Chat:** Enter questions and receive insightful responses instantly.
-- **Simple Exit Mechanism:** Type 'quit' to terminate the conversation easily.
-- **Graceful Error Handling:** Handles empty questions with appropriate replies.
-- **Cutting-edge AI:** Powered by the Mistral language model through Hugging Face's API.
+- **Streamlit-Powered UI:** Enjoy an intuitive and user-friendly interface for interaction.
+- **Dynamic Streaming:** Real-time word-by-word response generation for a smooth conversational experience.
+- **Session Memory:** Maintains chat history during the session for continuity.
+- **Quick & Easy Integration:** Utilizes Mistral's cutting-edge AI through Hugging Face.
 
 ---
 
 ## 📋 Requirements
 
-Ensure the following Python libraries are installed:
+Make sure you have the following Python libraries installed:
+- `streamlit`
 - `mistralai`
-- `huggingface_hub`
 
-Install these libraries using pip:
+Install them using pip:
 ```bash
-pip install mistralai huggingface_hub
-
-
-
-
-
-
+pip install streamlit mistralai
