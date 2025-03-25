@@ -46,12 +46,7 @@ python-dotenv
 
 ## Usage 🚀
 
-1. Set up your OpenRouter API key in `.env` file:
-```env
-OPENROUTER_API_KEY=your_api_key_here
-```
-
-2. Run the Streamlit app:
+1. Run the Streamlit app:
 ```bash
 streamlit run Chatbot.py
 ```
