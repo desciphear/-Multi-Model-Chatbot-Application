@@ -51,7 +51,7 @@ python-dotenv
 streamlit run Chatbot.py
 ```
 
-3. Access the application through your web browser (typically http://localhost:8501)
+2. Access the application through your web browser (typically http://localhost:8501)
 
 ## Features Breakdown 🔍
 
