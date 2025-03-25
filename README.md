@@ -18,6 +18,7 @@ Welcome to the **AI Chatbot**, an interactive and responsive chatbot built with 
 Make sure you have the following Python libraries installed:
 - `streamlit`
 - `mistralai`
+- `huggingface_hub`
 
 Install them using pip:
 ```bash
