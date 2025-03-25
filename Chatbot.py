@@ -1,7 +1,10 @@
 import streamlit as st
 import time
 from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 # Model dictionary with display names as keys and model IDs as values (alphabetically ordered)
 MODEL_DICT = {
     "DeepHermes": "nousresearch/deephermes-3-llama-3-8b-preview:free",
@@ -483,8 +486,9 @@ prompt = st.chat_input("Ask Your Question")
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
 )
+
 
 if prompt:
     with st.chat_message("user"):
