@@ -1,38 +1,121 @@
-# 🧠 Multi-Model Chatbot Application
+# Multi-Model AI Chatbot 🤖
 
-Welcome to **Multi-Model Chatbot Application**, an advanced chatbot interface built with **Streamlit** and **OpenAI**, designed to interact with diverse AI models for tasks like coding, creative writing, advanced reasoning, and multimodal input processing.
+A sophisticated Streamlit-based chatbot application that provides access to multiple AI language models through a unified interface.
 
-## 🌟 Features
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.0+-red.svg)](https://streamlit.io/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-API-green.svg)](https://openai.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-- **Dynamic Model Selection**: Choose from over 40 pre-configured models such as DeepHermes, Dolphin 3.0, and Zephyr for tailored capabilities.
-- **Rich Model Details**: Access architecture, parameters, best tasks, and release dates for each model through an interactive sidebar.
-- **Streaming Responses**: Real-time word-by-word streaming for an engaging conversational experience.
-- **Session Memory**: Maintains chat history for each selected model to ensure context continuity.
-- **Customizable Settings**: Adjust the temperature slider to control the creativity of model responses.
+## Features ✨
 
-## 📋 Requirements
+- Access to 45+ different AI language models
+- Real-time streaming responses
+- Temperature control for response creativity
+- File upload support (txt, py, json, jpg, png, gif, zip, pdf)
+- Chat history management for each model
+- Detailed model information and specifications
+- Image processing and display capabilities
+- Base64 encoding for file handling
+- PDF text extraction
+- Interactive sidebar for model selection and settings
 
-Ensure the following Python libraries are installed:
+## Installation 🛠️
 
 ```bash
-pip install streamlit openai time
+# Clone the repository
+git clone https://github.com/yourusername/multi-model-chatbot.git
+
+# Navigate to project directory
+cd multi-model-chatbot
+
+# Install required packages
+pip install -r requirements.txt
 ```
 
-## 🚀 Usage
+## Requirements 📋
 
-Run the chatbot application using the following command:
+```text
+streamlit
+openai
+Pillow
+PyPDF2
+requests
+python-dotenv
+```
 
+## Usage 🚀
+
+1. Set up your OpenRouter API key in `.env` file:
+```env
+OPENROUTER_API_KEY=your_api_key_here
+```
+
+2. Run the Streamlit app:
 ```bash
-streamlit run app.py
+streamlit run Chatbot.py
 ```
 
-## 🏷️ Tags
+3. Access the application through your web browser (typically http://localhost:8501)
 
-`streamlit` `OpenAI` `chatbot` `AI models` `multi-model support` `natural language processing` `machine learning` `deep learning` `Q&A chatbot` `code generation` `creative writing` `data science`
+## Features Breakdown 🔍
 
+### Supported Models
+- LLaMA series (3.0, 3.1, 3.2, 3.3)
+- Gemini series
+- Mistral variants
+- DeepSeek models
+- Qwen models
+- And many more!
 
+### File Support
+- Text files (.txt)
+- Python files (.py)
+- JSON files (.json)
+- Images (.jpg, .png, .gif)
+- ZIP archives
+- PDF documents
 
-## 📧 Contact
+## Contributing 🤝
 
-For any inquiries or support, reach out via [piyush9891779219@gmail.com](mailto:piyush9891779219@gmail.com).
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
+## License 📄
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments 🙏
+
+- OpenRouter API for model access
+- Streamlit for the web framework
+- OpenAI for API structure inspiration
+
+## Tags 🏷️
+
+```yaml
+tags:
+  - ai
+  - chatbot
+  - machine-learning
+  - natural-language-processing
+  - streamlit
+  - python
+  - openai
+  - llm
+  - language-models
+  - file-processing
+  - pdf-extraction
+  - image-processing
+  - base64
+  - api-integration
+  - web-application
+  - llama
+  - gemini
+  - mistral
+  - deepseek
+  - qwen
+```
