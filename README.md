@@ -1,25 +1,26 @@
-# 💬 AI Chatbot Powered by Mistral 🚀
+# 🧠 Multi-Model Chatbot Application
 
-Welcome to the **AI Chatbot**, an interactive and responsive chatbot built with **Streamlit** and **Mistral**, offering real-time conversational AI responses. This project is designed to deliver seamless Q&A sessions with an engaging user interface.
+Welcome to **Multi-Model Chatbot Application**, an advanced chatbot interface built with **Streamlit** and **OpenAI**, designed to interact with diverse AI models for tasks ranging from coding to creative writing, advanced reasoning, and more.
 
 ---
 
 ## 🌟 Features
 
-- **Streamlit-Powered UI:** Enjoy an intuitive and user-friendly interface for interaction.
-- **Dynamic Streaming:** Real-time word-by-word response generation for a smooth conversational experience.
-- **Session Memory:** Maintains chat history during the session for continuity.
-- **Quick & Easy Integration:** Utilizes Mistral's cutting-edge AI through Hugging Face.
+- **Dynamic Model Selection:** Choose from over 40 pre-configured models such as DeepHermes, Dolphin 3.0, and Zephyr for tailored capabilities.
+- **Rich Model Details:** Access architecture, parameters, best tasks, and release dates for each model through an interactive sidebar.
+- **Streaming Responses:** Real-time word-by-word streaming for an engaging conversational experience.
+- **Session Memory:** Maintains chat history for each selected model to ensure context continuity.
+- **Customizable Settings:** Adjust the **temperature** slider to control the creativity of model responses.
 
 ---
 
 ## 📋 Requirements
 
-Make sure you have the following Python libraries installed:
+Ensure the following Python libraries are installed:
 - `streamlit`
-- `mistralai`
-- `huggingface_hub`
+- `openai`
+- `time`
 
 Install them using pip:
 ```bash
-pip install streamlit mistralai
+pip install streamlit openai
