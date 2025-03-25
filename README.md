@@ -30,15 +30,9 @@ streamlit run app.py
 
 `streamlit` `OpenAI` `chatbot` `AI models` `multi-model support` `natural language processing` `machine learning` `deep learning` `Q&A chatbot` `code generation` `creative writing` `data science`
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests to improve the chatbot.
 
 ## 📧 Contact
 
-For any inquiries or support, reach out via [your-email@example.com](mailto:your-email@example.com).
+For any inquiries or support, reach out via [piyush9891779219@gmail.com](mailto:piyush9891779219@gmail.com).
 
