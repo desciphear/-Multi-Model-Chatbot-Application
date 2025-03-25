@@ -483,7 +483,7 @@ prompt = st.chat_input("Ask Your Question")
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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",
+    api_key="<You_Open_Router_Key>",
 )
 
 if prompt:
