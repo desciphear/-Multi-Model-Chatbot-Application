@@ -563,6 +563,13 @@ def cleanup_removed_files():
         for file in removed_files:
             del st.session_state.uploaded_file_contents[file]
 
+# Initialize session state variables at the start of your script, after imports
+if 'model_messages' not in st.session_state:
+    st.session_state.model_messages = {model_id: [] for model_id in MODEL_DICT.values()}
+
+if 'uploaded_file_contents' not in st.session_state:
+    st.session_state.uploaded_file_contents = {}
+
 # Add sidebar
 with st.sidebar:
     st.title("Chatbot Settings")
