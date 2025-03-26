@@ -33,6 +33,12 @@ cd multi-model-chatbot
 pip install -r requirements.txt
 ```
 
+## Live Demo 👀
+
+![Animation-ezgif com-optimize](https://github.com/user-attachments/assets/7a6cab00-2172-49b9-93cc-4c1cda10a8e2)
+
+
+
 ## Requirements 📋
 
 ```text
