@@ -671,20 +671,18 @@ if prompt:
     })
     
     with st.spinner("Thinking..."):
-        try:
-            completion = client.chat.completions.create(
-            model=selected_model,
-            messages=[
-                {"role": m["role"], "content": m["content"]} 
-                for m in st.session_state.model_messages[selected_model]
-            ] + ([{"role": "user", "content": message_for_model}] if message_for_model != message_content else []),
-            temperature=temperature
-            )
-            response = completion.choices[0].message.content
-        except:
-            if completion.error[0].code.content == 401:
-                st.error("API Key may have expired")
-                st.info("Contact the owner email: piyush9891779219@gmail.com")
+        completion = client.chat.completions.create(
+        model=selected_model,
+        messages=[
+            {"role": m["role"], "content": m["content"]} 
+            for m in st.session_state.model_messages[selected_model]
+        ] + ([{"role": "user", "content": message_for_model}] if message_for_model != message_content else []),
+        temperature=temperature
+        )
+        response = completion.choices[0].message.content
+        if completion.error[0].code.content == 401:
+            st.error("API Key may have expired")
+            st.info("Contact the owner email: piyush9891779219@gmail.com")
         
         # Process response for images
         response = process_image_response(response)
