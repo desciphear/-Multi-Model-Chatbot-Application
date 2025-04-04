@@ -671,22 +671,21 @@ if prompt:
     })
     try:
         with st.spinner("Thinking..."):
-            
-                completion = client.chat.completions.create(
-                model=selected_model,
-                messages=[
-                    {"role": m["role"], "content": m["content"]} 
-                    for m in st.session_state.model_messages[selected_model]
-                ] + ([{"role": "user", "content": message_for_model}] if message_for_model != message_content else []),
-                temperature=temperature
-                )
-                response = completion.choices[0].message.content
-                # Process response for images
-                response = process_image_response(response)
+            completion = client.chat.completions.create(
+            model=selected_model,
+            messages=[
+                {"role": m["role"], "content": m["content"]} 
+                for m in st.session_state.model_messages[selected_model]
+            ] + ([{"role": "user", "content": message_for_model}] if message_for_model != message_content else []),
+            temperature=temperature
+            )
+            response = completion.choices[0].message.content
+            # Process response for images
+            response = process_image_response(response)
          with st.chat_message("assistant"):
             st.write_stream(stream_data(response))
         
-        st.session_state.model_messages[selected_model].append({
+         st.session_state.model_messages[selected_model].append({
             "role": "assistant",
             "content": response
         })
