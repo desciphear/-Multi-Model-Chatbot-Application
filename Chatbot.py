@@ -685,7 +685,7 @@ if prompt:
         with st.chat_message("assistant"):
             st.write_stream(stream_data(response))
         
-         st.session_state.model_messages[selected_model].append({
+        st.session_state.model_messages[selected_model].append({
             "role": "assistant",
             "content": response
         })
