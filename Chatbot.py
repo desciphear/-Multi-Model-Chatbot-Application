@@ -682,7 +682,7 @@ if prompt:
             )
             response = completion.choices[0].message.content
         except:
-            if response.code == 400:
+            if response.code == 401:
                 st.error("API Key may have expired")
                 st.info("Contact the owner email: piyush9891779219@gmail.com)
         
