@@ -681,12 +681,13 @@ if prompt:
             temperature=temperature
             )
             response = completion.choices[0].message.content
+            # Process response for images
+            response = process_image_response(response)
         except:
             st.error("API Key may have expired")
             st.info("Contact the owner email: piyush9891779219@gmail.com")
         
-        # Process response for images
-        response = process_image_response(response)
+        
         
     with st.chat_message("assistant"):
         st.write_stream(stream_data(response))
