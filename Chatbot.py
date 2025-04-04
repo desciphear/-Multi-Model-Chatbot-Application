@@ -493,17 +493,8 @@ def extract_file_content(file):
             return f"Error processing PDF: {str(e)}"
     if file_extension in ['txt', 'py', 'json', 'md']:
         return process_text_file(content)
-    elif file_extension in ['jpg', 'jpeg', 'png', 'gif']:
-        return process_image_file(content)
     elif file_extension == 'pdf':
         return f"PDF file detected: {file.name}"
-    elif file_extension == 'zip':
-        extracted = {}
-        with zipfile.ZipFile(io.BytesIO(content)) as z:
-            for filename in z.namelist():
-                with z.open(filename) as f:
-                    extracted[filename] = process_text_file(f.read())
-        return extracted
     return None
 
 # Function to process and display images from model response
@@ -611,7 +602,7 @@ with st.sidebar:
     st.markdown("### Upload Files")
     uploaded_files = st.file_uploader(
         "Upload documents, images, code, or zip files",
-        type=['txt', 'py', 'json','zip', 'pdf'],
+        type=['txt', 'py', 'json', 'pdf'],
         accept_multiple_files=True
     )
     
