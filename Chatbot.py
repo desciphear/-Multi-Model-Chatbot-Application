@@ -684,7 +684,7 @@ if prompt:
         except:
             if response.code == 401:
                 st.error("API Key may have expired")
-                st.info("Contact the owner email: piyush9891779219@gmail.com)
+                st.info("Contact the owner email: piyush9891779219@gmail.com")
         
         # Process response for images
         response = process_image_response(response)
