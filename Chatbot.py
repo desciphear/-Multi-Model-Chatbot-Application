@@ -682,7 +682,7 @@ if prompt:
             response = completion.choices[0].message.content
             # Process response for images
             response = process_image_response(response)
-         with st.chat_message("assistant"):
+        with st.chat_message("assistant"):
             st.write_stream(stream_data(response))
         
          st.session_state.model_messages[selected_model].append({
