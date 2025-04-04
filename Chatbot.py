@@ -611,7 +611,7 @@ with st.sidebar:
     st.markdown("### Upload Files")
     uploaded_files = st.file_uploader(
         "Upload documents, images, code, or zip files",
-        type=['txt', 'py', 'json', 'jpg', 'jpeg', 'png', 'gif', 'zip', 'pdf'],
+        type=['txt', 'py', 'json','zip', 'pdf'],
         accept_multiple_files=True
     )
     
@@ -647,7 +647,7 @@ prompt = st.chat_input("Ask Your Question")
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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",
+    api_key="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", #It is a free OpenRouter API
 )
 
 # Update the chat logic section
